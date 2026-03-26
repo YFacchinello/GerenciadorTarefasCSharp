@@ -7,47 +7,59 @@ namespace GerenciadorDeTarefas
     {
         static void Main(string[] args)
         {
-            List<string> tarefas = new List<string>();
+            List<Tarefa> listaDeTarefas = new List<Tarefa>();
             string opcao = "";
 
-            Console.WriteLine("--- BEM-VINDO AO TASK MASTER C# ---");
-
-            //loop principal do programa
-            while (opcao != "3")
+            while (opcao != "4")
             {
-                Console.WriteLine("\nEscolha uma opção:");
-                Console.WriteLine("1. Adicionar tarefa");
-                Console.WriteLine("2. Listar tarefas");
-                Console.WriteLine("3. Sair");
-                Console.Write("Opção: ");
+                Console.WriteLine("\n======= MEU GERENCIADOR ADS =======");
+                Console.WriteLine("1. Adicionar nova tarefa");
+                Console.WriteLine("2. Listar todas");
+                Console.WriteLine("3. Concluir uma tarefa");
+                Console.WriteLine("4. Sair");
+                Console.Write("Escolha uma opção: ");
 
                 opcao = Console.ReadLine();
 
                 switch (opcao)
                 {
                     case "1":
-                        Console.Write("Digite a descrição da tarefa: ");
-                        string novaTarefa = Console.ReadLine();
-                        tarefas.Add(novaTarefa);
-                        Console.WriteLine("Tarefa adicionada com sucesso!");
+                        Console.Write("Descrição da tarefa: ");
+                        string desc = Console.ReadLine();
+                        Tarefa nova = new Tarefa(desc);
+                        listaDeTarefas.Add(nova);
+                        Console.WriteLine("Sucesso!");
                         break;
 
                     case "2":
-                        Console.WriteLine("\n--- SUAS TAREFAS ---");
-                        if (tarefas.Count == 0) {
-                            Console.WriteLine("Nenhuma tarefa cadastrada.");
-                        } else {
-                            for (int i = 0; i < tarefas.Count; i++){
-                                Console.WriteLine($"{i + 1}. {tarefas[i]}");
-                            }
+                        Console.WriteLine("\n--- LISTA ATUAL ---");
+                        if (listaDeTarefas.Count == 0) Console.WriteLine("Vazio.");
+
+                        for (int i = 0; i < listaDeTarefas.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {listaDeTarefas[i]}");
                         }
                         break;
+
                     case "3":
-                        Console.WriteLine("Saindo... Até Logo!");
+                        Console.Write("Digite o número da tarefa que concluiu: ");
+                        if(int.TryParse(Console.ReadLine(), out int indice))
+                        {
+                            if (indice > 0 && indice <= listaDeTarefas.Count)
+                            {
+                                listaDeTarefas[indice - 1].Concluir();
+                                Console.WriteLine("Tarefa atualizada!");
+                            }
+                            else { Console.WriteLine("Número inválido."); }
+                        }
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Até a próxima!");
                         break;
 
                     default:
-                        Console.WriteLine("Opção inválida, tente novamente.");
+                        Console.WriteLine("Opção inexistente.");
                         break;
                 }
             }
