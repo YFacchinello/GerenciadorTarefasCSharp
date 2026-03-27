@@ -16,6 +16,11 @@ namespace GerenciadorDeTarefas
             Concluida = true;
         }
 
+        public string ParaArquivo()
+        {
+            return $"{Descricao};{Concluida}";
+        }
+
         public override string ToString()
         {
             string status = Concluida ? "[X]" : "[ ]";
